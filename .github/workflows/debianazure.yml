@@ -48,3 +48,27 @@ jobs:
           exit 1
           fi
           echo "Versão = " $VERSAO
+
+          # Runs a set of commands using the runners shell
+      - name: Construir a imagem local do Docker
+        run: |
+          echo docker build
+          docker build -t ${{ secrets.ACR_REPO }}\SergioMorais:$VERSAO .
+
+          # Runs a set of commands using the runners shell
+      - name: Login no repo do Azure Container Registry
+        run: |
+          echo docker login
+          docker login -u ${{ secrets.ACR_USER }} -p ${{ secrets.ACR_TOKEN }} ${{ secrets.ACR_REPO }}
+
+          # Runs a set of commands using the runners shell
+      - name: Push no Azure Container Registry
+        run: |
+          echo docker push
+          docker push ${{ secrets.ACR_REPO }}\SergioMorais:$VERSAO
+
+
+          
+
+          
+          
