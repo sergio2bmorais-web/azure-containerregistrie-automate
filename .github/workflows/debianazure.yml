@@ -25,9 +25,26 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v4
 
-
       # Runs a set of commands using the runners shell
       - name: Run a multi-line script
         run: |
-          echo Add other actions to build,
-          echo test, and deploy your project.
+          echo testar ficheiro config.env
+          # Carrega variáveis do ficheiro config.env
+          if [ -f "config.env" ]; then
+          # Importa para o ambiente atual
+          source config.env
+          else
+          echo "Ficheiro config.env não encontrado."
+          exit 1
+          fi
+
+          echo testar ficheiro Dockerfile
+          # Carrega variáveis do ficheiro config.env
+          if [ -f "Dockerfile" ]; then
+    
+          echo "ficheiro Dockerfile existe"
+          else
+          echo "Ficheiro Dockerfile não encontrado."
+          exit 1
+          fi
+          echo "Versão = " $VERSAO
