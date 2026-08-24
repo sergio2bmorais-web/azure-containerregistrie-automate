@@ -1,0 +1,44 @@
+# This is a basic workflow to help you get started with Actions
+
+name: Automatizar a criação de uma imagem usando o azure container registry
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events but only for the "main" branch
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v4
+
+      # Runs a set of commands using the runners shell
+      - name: docker build images
+        run: |
+          echo criar a imagem local do docker
+          docker build -t sergio24082026cr.azurecr.io/pinger:github .
+
+      # Runs a set of commands using the runners shell
+      - name: docker login
+        run: |
+          echo Efectuar o Login no azurecr
+          docker login -u sergio24082026tk -p 5NHtjCwpy4hWrOxoWbkeqzxjKtBOtbnR7iDybSwwcMt7kwuU59g8JQQJ99CHACR0EKYEqg7NAAABAZCR6V9x sergio24082026cr.azurecr.io
+
+      # Runs a set of commands using the runners shell
+      - name: docker push
+        run: |
+          echo Enviar a imagem para o container registry
+          docker push sergio24082026cr.azurecr.io/pinger:github     
